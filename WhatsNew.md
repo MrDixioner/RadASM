@@ -20,3 +20,5 @@
 
 **Resolved Local Variable Name Collisions:**
 - Identified and fixed cases where LOCAL variable names conflicted with global macros or reserved symbols, which caused silent parser desynchronization.
+
+**Added auto-completion ( ), < >, " ", ' '**

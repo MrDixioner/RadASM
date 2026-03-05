@@ -3135,7 +3135,7 @@ CreateCtl proc uses esi edi,lpDlgCtl:DWORD
 	m2m		ws,[edi].style
 	or		ws,WS_ALWAYS
 	.if !tpe
-		and		ws,-1 xor (WS_POPUP or WS_DISABLED or WS_MINIMIZE or WS_MAXIMIZE or WS_VISIBLE)
+		and		ws,0FFFFFFFFh xor (WS_POPUP or WS_DISABLED or WS_MINIMIZE or WS_MAXIMIZE or WS_VISIBLE)
 		mov		eax,[edi].hpar
 		mov		hMdi,eax
 		mov		edx,edi
@@ -3143,7 +3143,7 @@ CreateCtl proc uses esi edi,lpDlgCtl:DWORD
 		invoke MakeDlgFont,edx
 		mov		hFnt,eax
 	.else
-		and		ws,-1 xor (WS_POPUP or WS_DISABLED or WS_MINIMIZE or WS_MAXIMIZE)
+		and		ws,0FFFFFFFFh xor (WS_POPUP or WS_DISABLED or WS_MINIMIZE or WS_MAXIMIZE)
 		mov		eax,[edi].hpar
 		invoke GetWindowLong,eax,GWL_USERDATA
 		mov		edx,eax
@@ -4292,7 +4292,7 @@ UpdateCtl proc uses esi,hCtl:DWORD
 		push	[esi].style
 		pop		ws
 		or		ws,WS_ALWAYS
-		and		ws,-1 xor (WS_POPUP or WS_DISABLED or WS_MINIMIZE or WS_MAXIMIZE)
+		and		ws,0FFFFFFFFh xor (WS_POPUP or WS_DISABLED or WS_MINIMIZE or WS_MAXIMIZE)
 		invoke SetWindowLong,hCtl,GWL_STYLE,ws
 		invoke SetWindowLong,hCtl,GWL_EXSTYLE,[esi].exstyle
 		invoke SetWindowText,hCtl,addr [esi].caption

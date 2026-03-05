@@ -32,7 +32,7 @@
 	include Inc\RAHexEd.inc
 	include Inc\RAGrid.inc
 
-	include \RadASM\Masm\Inc\RADbg.inc
+	include g:\prog\RadASM\Masm\Inc\RADbg.inc
 	include masm32.inc
 	include Debug.Inc
 	includelib masm32.lib

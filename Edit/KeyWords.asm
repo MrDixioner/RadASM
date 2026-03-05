@@ -1,4 +1,3 @@
-
 IDD_DLGKEYWORDS		equ 4200
 IDC_LSTKWCOLORS		equ 4001
 IDC_LSTKWACTIVE		equ 4014
@@ -6,13 +5,13 @@ IDC_LSTKWHOLD		equ 4013
 IDC_LSTCOLORS		equ 4015
 IDC_BTNKWAPPLY		equ 4002
 
-IDC_BTNHOLD			equ 4009
+IDC_BTNHOLD		equ 4009
 IDC_BTNACTIVE		equ 4008
-IDC_EDTKW			equ 4012
+IDC_EDTKW		equ 4012
 IDC_BTNKWADD		equ 4011
 IDC_BTNKWDEL		equ 4010
 
-IDC_CHKBOLD			equ 4004
+IDC_CHKBOLD		equ 4004
 IDC_CHKITALIC		equ 4003
 IDC_CHKRCFILE		equ 4005
 
@@ -134,8 +133,8 @@ SetKeyWordList proc uses esi edi,hWin:HWND,idLst:DWORD,nInx:DWORD
 		invoke BinToDec,nInx,addr buffer[1]
 		invoke GetPrivateProfileString,addr iniKeyWords,addr buffer,addr szNULL,hMem,16384,addr iniAsmFile
 		mov		eax,hMem
-		mov		al,[eax]
-		mov		esi,hMem
+		mov		al,byte ptr [eax]
+		mov		esi, dword ptr hMem
 		dec		esi
 	  Nxt:
 		inc		esi

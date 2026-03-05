@@ -4,6 +4,10 @@ bak/
 *.exp
 *.old
 *.obj
+*.bak
+*.res
+*.log
+*.exe
 Help/
 template/
 downloads/

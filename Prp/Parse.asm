@@ -812,7 +812,7 @@ WhatIsIt proc uses ebx esi,lpWord1:DWORD,len1:DWORD,lpWord2:DWORD,len2:DWORD,fCo
 			mov		ecx,len1
 			mov		ebx,lpWord1
 			mov		edx,lpWord2
-			.if byte ptr [edx]==':' && !len2==1 && [esi].PARSEDEF.nType==TPE_STLABEL
+			.if byte ptr [edx]==':' && len2!=1 && [esi].PARSEDEF.nType==TPE_STLABEL
 				xor		eax,eax
 			.else
 				call	TstWrd

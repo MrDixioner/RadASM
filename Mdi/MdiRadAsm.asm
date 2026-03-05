@@ -5772,6 +5772,8 @@ EditProc proc hWin:HWND,uMsg:UINT,wParam:WPARAM,lParam:LPARAM
 			xor		eax,eax
 			mov		fEatChar,eax
 			ret
+		
+		; --- [] ---
 		.elseif wParam=='[' && fAutoBrackets
 			push	ebx
 			mov		fAutoBrackets,0
@@ -5855,6 +5857,312 @@ EditProc proc hWin:HWND,uMsg:UINT,wParam:WPARAM,lParam:LPARAM
 			pop		ebx
 			xor		eax,eax
 			ret
+		
+		; --- () ---
+		.elseif wParam=='(' && fAutoBrackets
+			push	ebx
+			mov		fAutoBrackets,0
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'.',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'+',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'-',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,':',0
+			push	eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',CT_CHAR
+			invoke SendMessage,hWin,WM_CHAR,'(',lParam
+			invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+			mov		ebx,chrg.cpMin
+			invoke SendMessage,hEdit,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,ebx
+			mov		chrg.cpMin,eax
+			mov		chrg.cpMax,eax
+			sub		ebx,eax
+			invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			invoke SendMessage,hWin,WM_CHAR,')',lParam
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',eax
+			.if !ebx
+				invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			.endif
+			invoke SendMessage,hEdit,EM_SCROLLCARET,0,0
+			mov		fAutoBrackets,1
+			pop		ebx
+			xor		eax,eax
+			ret
+		.elseif wParam==')' && fAutoBrackets
+			push	ebx
+			mov		fAutoBrackets,0
+			invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'.',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'+',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'-',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,':',0
+			push	eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',CT_CHAR
+			mov		ebx,chrg.cpMin
+			invoke SendMessage,hWin,WM_CHAR,')',lParam
+			invoke SendMessage,hEdit,EM_FINDWORDBREAK,WB_MOVEWORDLEFT,ebx
+			.if eax!=ebx
+				mov		chrg.cpMin,eax
+				mov		chrg.cpMax,eax
+				inc		ebx
+			.endif
+			invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			invoke SendMessage,hWin,WM_CHAR,'(',lParam
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',eax
+			inc		ebx
+			mov		chrg.cpMin,ebx
+			mov		chrg.cpMax,ebx
+			invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			invoke SendMessage,hEdit,EM_SCROLLCARET,0,0
+			mov		fAutoBrackets,1
+			pop		ebx
+			xor		eax,eax
+			ret
+		; ---
+		
+		; --- <> ---
+		.elseif wParam=='<' && fAutoBrackets
+			push	ebx
+			mov		fAutoBrackets,0
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'.',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'+',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'-',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,':',0
+			push	eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',CT_CHAR
+			invoke SendMessage,hWin,WM_CHAR,'<',lParam
+			invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+			mov		ebx,chrg.cpMin
+			invoke SendMessage,hEdit,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,ebx
+			mov		chrg.cpMin,eax
+			mov		chrg.cpMax,eax
+			sub		ebx,eax
+			invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			invoke SendMessage,hWin,WM_CHAR,'>',lParam
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',eax
+			.if !ebx
+				invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			.endif
+			invoke SendMessage,hEdit,EM_SCROLLCARET,0,0
+			mov		fAutoBrackets,1
+			pop		ebx
+			xor		eax,eax
+			ret
+		.elseif wParam=='>' && fAutoBrackets
+			push	ebx
+			mov		fAutoBrackets,0
+			invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'.',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'+',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,'-',0
+			push	eax
+			invoke SendMessage,hEdit,REM_GETCHARTAB,':',0
+			push	eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',CT_CHAR
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',CT_CHAR
+			mov		ebx,chrg.cpMin
+			invoke SendMessage,hWin,WM_CHAR,'>',lParam
+			invoke SendMessage,hEdit,EM_FINDWORDBREAK,WB_MOVEWORDLEFT,ebx
+			.if eax!=ebx
+				mov		chrg.cpMin,eax
+				mov		chrg.cpMax,eax
+				inc		ebx
+			.endif
+			invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			invoke SendMessage,hWin,WM_CHAR,'<',lParam
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,':',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'-',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'+',eax
+			pop		eax
+			invoke SendMessage,hEdit,REM_SETCHARTAB,'.',eax
+			inc		ebx
+			mov		chrg.cpMin,ebx
+			mov		chrg.cpMax,ebx
+			invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+			invoke SendMessage,hEdit,EM_SCROLLCARET,0,0
+			mov		fAutoBrackets,1
+			pop		ebx
+			xor		eax,eax
+			ret
+		
+		; --- "" ---
+		.elseif wParam=='"' && fAutoBrackets
+		    push    ebx
+		    mov     fAutoBrackets,0
+		    ; Сохраняем текущие настройки символов
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,'.',0
+		    push    eax
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,'+',0
+		    push    eax
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,'-',0
+		    push    eax
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,':',0
+		    push    eax
+		    ; Временно меняем классификацию для корректной работы word break
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'.',CT_CHAR
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'+',CT_CHAR
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'-',CT_CHAR
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,':',CT_CHAR
+		    
+		    ; Вставляем первую кавычку
+		    invoke SendMessage,hWin,WM_CHAR,'"',lParam
+		    
+		    ; Получаем текущую позицию курсора
+		    invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+		    mov     ebx,chrg.cpMin
+		    
+		    ; Двигаемся вправо до границы слова
+		    invoke SendMessage,hEdit,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,ebx
+		    mov     chrg.cpMin,eax
+		    mov     chrg.cpMax,eax
+		    sub     ebx,eax             ; ebx = расстояние до границы слова
+		    
+		    ; Вставляем вторую кавычку
+		    invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+		    invoke SendMessage,hWin,WM_CHAR,'"',lParam
+		    
+		    ; Восстанавливаем исходные настройки символов
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,':',eax
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'-',eax
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'+',eax
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'.',eax
+		    
+		    ; Возвращаем курсор между кавычками
+		    .if !ebx
+		        ; Если не было текста справа, курсор остаётся между кавычек
+		        invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+		        dec     chrg.cpMin
+		        dec     chrg.cpMax
+		        invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+		    .else
+		        ; Иначе возвращаем на позицию после первой кавычки
+		        invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+		        sub     chrg.cpMin,2
+		        sub     chrg.cpMax,2
+		        invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+		    .endif
+		    
+		    invoke SendMessage,hEdit,EM_SCROLLCARET,0,0
+		    mov     fAutoBrackets,1
+		    pop     ebx
+		    xor     eax,eax
+		    ret
+		
+		; --- '' ---
+		.elseif wParam=="'" && fAutoBrackets
+		    push    ebx
+		    mov     fAutoBrackets,0
+		    ; Сохраняем текущие настройки символов
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,'.',0
+		    push    eax
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,'+',0
+		    push    eax
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,'-',0
+		    push    eax
+		    invoke SendMessage,hEdit,REM_GETCHARTAB,':',0
+		    push    eax
+		    ; Временно меняем классификацию
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'.',CT_CHAR
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'+',CT_CHAR
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'-',CT_CHAR
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,':',CT_CHAR
+		    
+		    ; Вставляем первую кавычку
+		    invoke SendMessage,hWin,WM_CHAR,"'",lParam
+		    
+		    ; Получаем текущую позицию курсора
+		    invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+		    mov     ebx,chrg.cpMin
+		    
+		    ; Двигаемся вправо до границы слова
+		    invoke SendMessage,hEdit,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,ebx
+		    mov     chrg.cpMin,eax
+		    mov     chrg.cpMax,eax
+		    sub     ebx,eax
+		    
+		    ; Вставляем вторую кавычку
+		    invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+		    invoke SendMessage,hWin,WM_CHAR,"'",lParam
+		    
+		    ; Восстанавливаем исходные настройки символов
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,':',eax
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'-',eax
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'+',eax
+		    pop     eax
+		    invoke SendMessage,hEdit,REM_SETCHARTAB,'.',eax
+		    
+		    ; Возвращаем курсор между кавычками
+		    .if !ebx
+		        ; Если не было текста справа
+		        invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+		        dec     chrg.cpMin
+		        dec     chrg.cpMax
+		        invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+		    .else
+		        ; Иначе возвращаем на позицию после первой кавычки
+		        invoke SendMessage,hEdit,EM_EXGETSEL,0,addr chrg
+		        sub     chrg.cpMin,2
+		        sub     chrg.cpMax,2
+		        invoke SendMessage,hEdit,EM_EXSETSEL,0,addr chrg
+		    .endif
+		    
+		    invoke SendMessage,hEdit,EM_SCROLLCARET,0,0
+		    mov     fAutoBrackets,1
+		    pop     ebx
+		    xor     eax,eax
+		    ret
+		
 		.endif
 		invoke CallWindowProc,OldEditProc,hWin,uMsg,wParam,lParam
 		mov		eax,wParam

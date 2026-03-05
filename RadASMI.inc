@@ -1197,11 +1197,11 @@ lpAddWordToWordList				dd offset AddWordToWordList
 lpRefreshProperty				dd offset RefreshProperty
 ;Do not insert or move, just add
 
-AppName							db 'RadASM version 2.2.2.4',0
+AppName							db 'RadASM version 2.2.3.0',0
 DisplayName						db 'RadASM',0
 AboutMsg						db 'RadASM (C) KetilO 2001-2009',13,10,13,10,'radasmide@hotmail.com',0
-AboutUrl1						db 'http://radasm.cherrytree.at/',0
-AboutUrl2						db 'http://www.oby.ro/rad_asm',0
+AboutUrl1						db 'not',0
+AboutUrl2						db 'not',0
 
 ;Do not insert or move, just add
 nRadASMVer						dd 2224

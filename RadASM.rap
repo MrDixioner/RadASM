@@ -192,7 +192,7 @@ MinorFiles=*.res;*.obj;
 12=154,154,590,413,1082
 13=176,176,590,413,3558
 14=176,176,536,413,1625
-15=22,22,590,413,71570
+15=22,22,590,413,100224
 16=66,66,536,413,84636
 17=0,0,536,413,15839
 18=176,176,536,413
@@ -761,7 +761,7 @@ Group=Assembly,Resources,..RC File,..Menu,..Dialog,Misc,Include
 [SourceSafe]
 Project=$/RadASM
 [PTimer]
-PTimer=2242438926
+PTimer=2243820004
 [RADebugBP]
 96=
 55=

@@ -1,6 +1,8 @@
 # RadASM
 
-![](https://github.com/mrfearless/RadASM2/blob/master/Res/RadAsm.png) [Current version: 2.2.2.4 - Last updated: 26/08/2022](https://github.com/mrfearless/RadASM2/releases/latest)
+![](https://github.com/mrfearless/RadASM2/blob/master/Res/RadAsm.png)
+
+**This is a fork of the original [RadASM2](https://github.com/mrfearless/RadASM2) project, developed using a modern version of the MASM32 compiler.**
 
 ## Overview
 

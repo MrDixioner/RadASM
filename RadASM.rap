@@ -254,7 +254,7 @@ MinorFiles=*.res;*.obj;
 75=66,66,536,413,1757
 74=44,44,536,413
 78=66,66,536,413
-79=88,88,536,413,25492
+79=88,88,536,413,9459
 80=154,154,536,413,2308
 81=0,0,536,413,661
 82=176,176,536,413
@@ -305,7 +305,7 @@ MinorFiles=*.res;*.obj;
 128=0,0,0,0
 
 [AutoLoad]
-AutoLoad=11,2,15,94,92,69,68,3,6
+AutoLoad=11,2,15,94,92,69,68,3,6,78,79
 
 [BookMark]
 0=
@@ -491,16 +491,16 @@ ID=105
 44=6,C:\RadASM\Masm\Templates\Dialog.rad,,WndProc
 76=0,C:\RadASM\Masm\Templates\Dialog.rad,,WndProc
 [Find]
-1="[]"
-2="'+'"
-3="editchildproc"
-4="child"
-5="autochar"
-6="true"
-7="szBra"
-8="lpopt.autochar"
-9=".if lpopt.autochar"
-10="wm_char"
+1="AddCboTheme"
+2="IDC_CHKITALIC"
+3="current"
+4="[]"
+5="'+'"
+6="editchildproc"
+7="child"
+8="autochar"
+9="true"
+10="szBra"
 
 [BreakPoint]
 0=
@@ -541,7 +541,7 @@ MilestoneOnTime=2
 MilestoneOnDate=0
 MilestoneOnDateWhen=1
 MilestoneOnDateStatus=0
-MilestoneOnDateDate=5
+MilestoneOnDateDate=6
 MilestoneOnDateTimeYear=2006
 MilestoneOnDateTimeMonth=8
 MilestoneOnDateTimeDate=27
@@ -728,7 +728,7 @@ Group=Assembly,Resources,..RC File,..Menu,..Dialog,Misc,Include
 88=,300056656,603988552,50350210
 22=,
 97=,
-79=,287319104,32
+79=,287319040,
 51=
 95=
 101=
@@ -761,7 +761,7 @@ Group=Assembly,Resources,..RC File,..Menu,..Dialog,Misc,Include
 [SourceSafe]
 Project=$/RadASM
 [PTimer]
-PTimer=2248131364
+PTimer=2251127318
 [RADebugBP]
 96=
 55=
@@ -794,6 +794,7 @@ PTimer=2248131364
 30=
 38=
 105=
+79=
 [GroupExpand]
 GroupExpand=1,0,1,1,1,0,1,0
 [Watch]
